@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - İşteyim Göçteyim</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f6fa;
+            line-height: 1.6;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .admin-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon.applications {
+            color: #4caf50;
+        }
+
+        .stat-icon.views {
+            color: #2196f3;
+        }
+
+        .stat-icon.social {
+            color: #ff6b35;
+        }
+
+        .stat-icon.conversion {
+            color: #9c27b0;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .data-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .applications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .applications-table th,
+        .applications-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .applications-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .applications-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .status-pending {
+            background: #ff9800;
+        }
+
+        .status-accepted {
+            background: #4caf50;
+        }
+
+        .status-rejected {
+            background: #f44336;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .btn-accept {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-reject {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background: #45a049;
+            transform: translateY(-1px);
+        }
+
+        .btn-reject:hover {
+            background: #da190b;
+            transform: translateY(-1px);
+        }
+
+        .btn-accept:disabled,
+        .btn-reject:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .file-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            max-width: 200px;
+        }
+
+        .file-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+
+        .file-link:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .file-link i {
+            color: #666;
+        }
+
+        .file-count {
+            display: inline-block;
+            background: #2196f3;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        .file-category {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.2rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .no-files {
+            color: #999;
+            font-style: italic;
+            font-size: 0.8rem;
+        }
+
+        .chart-container {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .chart {
+            display: flex;
+            align-items: end;
+            height: 200px;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #ff6b35, #ffa726);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            min-height: 20px;
+            transition: all 0.3s;
+        }
+
+        .chart-bar:hover {
+            filter: brightness(1.1);
+        }
+
+        .chart-bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .chart-bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #2196f3;
+            color: white;
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .back-to-site {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: #ff6b35;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            font-size: 1.2rem;
+            z-index: 1000;
+        }
+
+        .back-to-site:hover {
+            background: #e55a2b;
+            transform: scale(1.1);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .refresh-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .applications-table {
+                font-size: 0.9rem;
+            }
+
+            .applications-table th,
+            .applications-table td {
+                padding: 0.7rem;
+            }
+
+            .back-to-site {
+                position: static;
+                margin: 1rem auto;
+                display: block;
+                width: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-site" title="Ana Sayfaya Dön">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <div class="admin-header">
+        <h1><i class="fas fa-chart-line"></i> Admin Panel</h1>
+        <p>İşteyim Göçteyim - Veri ve Analitik Merkezi</p>
+    </div>
+
+    <div class="container">
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon applications">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="stat-number" id="totalApplications">0</div>
+                <div class="stat-label">Toplam Başvuru</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon views">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-number" id="totalViews">0</div>
+                <div class="stat-label">Toplam Ziyaret</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon social">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+                <div class="stat-number" id="socialClicks">0</div>
+                <div class="stat-label">Sosyal Medya Tıklaması</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon conversion">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <div class="stat-number" id="conversionRate">0%</div>
+                <div class="stat-label">Dönüşüm Oranı</div>
+            </div>
+        </div>
+
+        <!-- Daily Views Chart -->
+        <div class="data-section">
+            <div class="section-title">
+                <i class="fas fa-chart-bar"></i>
+                Günlük Ziyaretçi Analizi
+                <button class="refresh-btn" onclick="loadData()" title="Yenile">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+            <div class="chart-container">
+                <div class="chart" id="viewsChart">
+                    <!-- Chart bars will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Applications Table -->
+        <div class="data-section">
+            <div class="section-title">
+                <i class="fas fa-users"></i>
+                Başvurular
+            </div>
+            <div class="export-buttons">
+                <button class="btn btn-success" onclick="exportToCSV()">
+                    <i class="fas fa-download"></i> CSV İndir
+                </button>
+                <button class="btn btn-primary" onclick="exportToJSON()">
+                    <i class="fas fa-file-code"></i> JSON İndir
+                </button>
+                <button class="btn btn-warning" onclick="clearData()">
+                    <i class="fas fa-trash"></i> Verileri Temizle
+                </button>
+            </div>
+            <div class="table-container">
+                <table class="applications-table" id="applicationsTable">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ad Soyad</th>
+                            <th>E-posta</th>
+                            <th>Telefon</th>
+                            <th>Deneyim Alanı</th>
+                            <th>Belgeler</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsBody">
+                        <!-- Applications will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Email Log Section -->
+        <div class="data-section">
+            <div class="section-title">
+                <i class="fas fa-envelope"></i>
+                E-posta Logları
+            </div>
+            <div class="table-container">
+                <table class="applications-table" id="emailLogTable">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Alıcı</th>
+                            <th>Konu</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody id="emailLogBody">
+                        <!-- Email logs will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Social Media Analytics -->
+        <div class="data-section">
+            <div class="section-title">
+                <i class="fas fa-thumbs-up"></i>
+                Sosyal Medya Analitikleri
+            </div>
+            <div class="chart-container">
+                <div class="chart" id="socialChart">
+                    <!-- Social media chart will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            // Refresh data every 30 seconds
+            setInterval(loadData, 30000);
+        });
+
+        function loadData() {
+            // Load applications
+            const applications = window.opener ? window.opener.getApplications() : 
+                                JSON.parse(localStorage.getItem('applications') || '[]');
+            
+            // Load analytics
+            const analytics = window.opener ? window.opener.getAnalytics() : 
+                            JSON.parse(localStorage.getItem('analytics') || '{}');
+            
+            // Load page views
+            const pageViews = window.opener ? window.opener.getPageViews() : 
+                            JSON.parse(localStorage.getItem('pageViews') || '{}');
+            
+            // Load social analytics
+            const socialAnalytics = window.opener ? window.opener.getSocialAnalytics() : 
+                                  JSON.parse(localStorage.getItem('socialAnalytics') || '{}');
+
+            // Load email log
+            const emailLog = JSON.parse(localStorage.getItem('emailLog') || '[]');
+
+            // Update statistics
+            updateStatistics(applications, analytics, pageViews, socialAnalytics);
+            
+            // Update applications table
+            updateApplicationsTable(applications);
+            
+            // Update email log table
+            updateEmailLogTable(emailLog);
+            
+            // Update charts
+            updateViewsChart(pageViews);
+            updateSocialChart(socialAnalytics);
+        }
+
+        function updateStatistics(applications, analytics, pageViews, socialAnalytics) {
+            // Total applications
+            document.getElementById('totalApplications').textContent = applications.length;
+            
+            // Total views
+            const totalViews = Object.values(pageViews).reduce((sum, views) => sum + views, 0);
+            document.getElementById('totalViews').textContent = totalViews;
+            
+            // Social clicks
+            const socialClicks = Object.values(socialAnalytics).reduce((total, day) => {
+                return total + Object.values(day).reduce((sum, clicks) => sum + clicks, 0);
+            }, 0);
+            document.getElementById('socialClicks').textContent = socialClicks;
+            
+            // Conversion rate
+            const conversionRate = totalViews > 0 ? ((applications.length / totalViews) * 100).toFixed(1) : 0;
+            document.getElementById('conversionRate').textContent = conversionRate + '%';
+        }
+
+        function updateApplicationsTable(applications) {
+            const tbody = document.getElementById('applicationsBody');
+            
+            if (applications.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="no-data">Henüz başvuru bulunmamaktadır.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = applications.map(app => {
+                const date = new Date(app.timestamp).toLocaleDateString('tr-TR');
+                const experience = app.experience || 'Belirtilmemiş';
+                const status = app.status || 'pending';
+                const files = app.files || {};
+                
+                let statusText = 'Bekliyor';
+                let statusClass = 'status-pending';
+                
+                if (status === 'accepted') {
+                    statusText = 'Onaylandı';
+                    statusClass = 'status-accepted';
+                } else if (status === 'rejected') {
+                    statusText = 'Reddedildi';
+                    statusClass = 'status-rejected';
+                }
+                
+                const actionsDisabled = status !== 'pending';
+                const fileDisplay = generateFileDisplay(files, app.id);
+                
+                return `
+                    <tr>
+                        <td>${date}</td>
+                        <td>${app.name}</td>
+                        <td>${app.email}</td>
+                        <td>${app.phone}</td>
+                        <td>${experience}</td>
+                        <td>${fileDisplay}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-accept" onclick="acceptApplication('${app.id}')" ${actionsDisabled ? 'disabled' : ''}>
+                                    <i class="fas fa-check"></i>
+                                    Onayla
+                                </button>
+                                <button class="action-btn btn-reject" onclick="rejectApplication('${app.id}')" ${actionsDisabled ? 'disabled' : ''}>
+                                    <i class="fas fa-times"></i>
+                                    Reddet
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateEmailLogTable(emailLog) {
+            const tbody = document.getElementById('emailLogBody');
+            
+            if (emailLog.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="no-data">Henüz e-posta gönderilmemiştir.</td></tr>';
+                return;
+            }
+
+            // Sort by timestamp (newest first)
+            const sortedEmails = emailLog.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            tbody.innerHTML = sortedEmails.map(email => {
+                const date = new Date(email.timestamp).toLocaleDateString('tr-TR');
+                const time = new Date(email.timestamp).toLocaleTimeString('tr-TR', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                
+                return `
+                    <tr>
+                        <td>${date} ${time}</td>
+                        <td>${email.to}</td>
+                        <td>${email.subject}</td>
+                        <td><span class="status-badge status-accepted">Gönderildi</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateViewsChart(pageViews) {
+            const chart = document.getElementById('viewsChart');
+            const sortedDates = Object.keys(pageViews).sort().slice(-7); // Last 7 days
+            
+            if (sortedDates.length === 0) {
+                chart.innerHTML = '<div class="no-data">Henüz ziyaret verisi bulunmamaktadır.</div>';
+                return;
+            }
+
+            const maxViews = Math.max(...sortedDates.map(date => pageViews[date]));
+            
+            chart.innerHTML = sortedDates.map(date => {
+                const views = pageViews[date];
+                const height = (views / maxViews) * 160; // Max height 160px
+                const shortDate = new Date(date).toLocaleDateString('tr-TR', { 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                return `
+                    <div class="chart-bar" style="height: ${height}px;">
+                        <div class="chart-bar-value">${views}</div>
+                        <div class="chart-bar-label">${shortDate}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateSocialChart(socialAnalytics) {
+            const chart = document.getElementById('socialChart');
+            
+            // Aggregate social media clicks by platform
+            const platformTotals = {
+                instagram: 0,
+                tiktok: 0,
+                facebook: 0
+            };
+            
+            Object.values(socialAnalytics).forEach(day => {
+                Object.keys(day).forEach(platform => {
+                    if (platformTotals.hasOwnProperty(platform)) {
+                        platformTotals[platform] += day[platform];
+                    }
+                });
+            });
+            
+            const maxClicks = Math.max(...Object.values(platformTotals));
+            
+            if (maxClicks === 0) {
+                chart.innerHTML = '<div class="no-data">Henüz sosyal medya tıklaması bulunmamaktadır.</div>';
+                return;
+            }
+            
+            chart.innerHTML = Object.keys(platformTotals).map(platform => {
+                const clicks = platformTotals[platform];
+                const height = (clicks / maxClicks) * 160;
+                const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
+                
+                return `
+                    <div class="chart-bar" style="height: ${height}px;">
+                        <div class="chart-bar-value">${clicks}</div>
+                        <div class="chart-bar-label">${platformName}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function exportToCSV() {
+            const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            
+            if (applications.length === 0) {
+                alert('İndirilecek veri bulunmamaktadır.');
+                return;
+            }
+
+            const headers = ['Tarih', 'Ad Soyad', 'E-posta', 'Telefon', 'Deneyim Alanı', 'Mesaj'];
+            const csvContent = [
+                headers.join(','),
+                ...applications.map(app => [
+                    new Date(app.timestamp).toLocaleDateString('tr-TR'),
+                    app.name,
+                    app.email,
+                    app.phone,
+                    app.experience || '',
+                    (app.message || '').replace(/,/g, ';')
+                ].join(','))
+            ].join('\\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'basvurular.csv';
+            link.click();
+        }
+
+        function exportToJSON() {
+            const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            
+            if (applications.length === 0) {
+                alert('İndirilecek veri bulunmamaktadır.');
+                return;
+            }
+
+            const dataStr = JSON.stringify(applications, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'basvurular.json';
+            link.click();
+        }
+
+        function clearData() {
+            if (confirm('Tüm verileri silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+                localStorage.removeItem('applications');
+                localStorage.removeItem('analytics');
+                localStorage.removeItem('pageViews');
+                localStorage.removeItem('socialAnalytics');
+                localStorage.removeItem('emailLog');
+                alert('Tüm veriler temizlendi.');
+                loadData();
+            }
+        }
+
+        // Application Status Management
+        function acceptApplication(applicationId) {
+            if (!confirm('Bu başvuruyu onaylamak istediğinizden emin misiniz?')) {
+                return;
+            }
+
+            updateApplicationStatus(applicationId, 'accepted');
+            sendNotificationEmail(applicationId, 'accepted');
+        }
+
+        function rejectApplication(applicationId) {
+            if (!confirm('Bu başvuruyu reddetmek istediğinizden emin misiniz?')) {
+                return;
+            }
+
+            updateApplicationStatus(applicationId, 'rejected');
+            sendNotificationEmail(applicationId, 'rejected');
+        }
+
+        function updateApplicationStatus(applicationId, status) {
+            let applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            
+            const appIndex = applications.findIndex(app => app.id === applicationId);
+            if (appIndex !== -1) {
+                applications[appIndex].status = status;
+                applications[appIndex].updatedAt = new Date().toISOString();
+                localStorage.setItem('applications', JSON.stringify(applications));
+                
+                // Show success message
+                const statusText = status === 'accepted' ? 'onaylandı' : 'reddedildi';
+                showStatusMessage(`Başvuru ${statusText} ve e-posta gönderildi.`, 'success');
+                
+                // Reload data to update the table
+                loadData();
+            }
+        }
+
+        function sendNotificationEmail(applicationId, status) {
+            const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            const application = applications.find(app => app.id === applicationId);
+            
+            if (!application) return;
+
+            // Email configuration (using EmailJS service)
+            const emailParams = {
+                to_email: application.email,
+                to_name: application.name,
+                subject: status === 'accepted' ? 
+                    'İşteyim Göçteyim - Başvurunuz Onaylandı! 🎉' : 
+                    'İşteyim Göçteyim - Başvuru Durumunuz',
+                message: getEmailTemplate(application, status),
+                from_name: 'İşteyim Göçteyim'
+            };
+
+            // For demo purposes, we'll simulate email sending
+            // In production, you would integrate with EmailJS, SendGrid, or similar service
+            simulateEmailSending(emailParams);
+        }
+
+        function getEmailTemplate(application, status) {
+            if (status === 'accepted') {
+                return `
+Merhaba ${application.name},
+
+🎉 Harika haber! İşteyim Göçteyim başvurunuz onaylandı!
+
+Avrupa'da yeni bir hayata başlama yolculuğunuzda size yardımcı olmaktan mutluluk duyuyoruz. 
+Danışmanlarımız en kısa sürede sizinle iletişime geçecek ve sonraki adımları konuşacak.
+
+Başvuru Detaylarınız:
+• Ad Soyad: ${application.name}
+• E-posta: ${application.email}
+• Telefon: ${application.phone}
+• Deneyim Alanı: ${application.experience || 'Belirtilmemiş'}
+• Başvuru Tarihi: ${new Date(application.timestamp).toLocaleDateString('tr-TR')}
+
+Şimdi sırada neler var?
+1. Danışmanımız size telefon ile ulaşacak
+2. Kişisel görüşmenizi ayarlayacağız  
+3. İş fırsatlarınızı değerlendireceğiz
+4. Vize sürecini başlatacağız
+
+Sorularınız için bizimle iletişime geçebilirsiniz:
+📧 info@isteyimgucteyim.com
+📞 +90 XXX XXX XX XX
+
+Hayallerinizi gerçekleştirme yolculuğunuzda yanınızdayız!
+
+İyi dileklerle,
+İşteyim Göçteyim Ekibi
+                `.trim();
+            } else {
+                return `
+Merhaba ${application.name},
+
+İşteyim Göçteyim başvurunuz için teşekkür ederiz.
+
+Ne yazık ki şu anda profiliniize uygun bir pozisyon bulamadık. Ancak bu, gelecekte fırsatların olmayacağı anlamına gelmiyor!
+
+Başvuru Detaylarınız:
+• Ad Soyad: ${application.name}  
+• E-posta: ${application.email}
+• Başvuru Tarihi: ${new Date(application.timestamp).toLocaleDateString('tr-TR')}
+
+Size önerimiz:
+• Deneyiminizi artırın ve yeniden başvurun
+• Sosyal medya hesaplarımızı takip edin (yeni fırsatları duyururuz)
+• Becerilerinizi geliştirin ve tekrar deneyin
+
+Gelecekte yeni fırsatlar olduğunda size haber vereceğiz.
+
+Sosyal medya hesaplarımızı takip etmeyi unutmayın:
+📱 Instagram: @isteyimgucteyim
+📱 TikTok: @isteyimgucteyim  
+📱 Facebook: İşteyim Göçteyim
+
+İyi dileklerle,
+İşteyim Göçteyim Ekibi
+                `.trim();
+            }
+        }
+
+        function simulateEmailSending(emailParams) {
+            // This simulates email sending - in production you'd use a real email service
+            console.log('E-posta gönderiliyor:', emailParams);
+            
+            // Store email log for admin tracking
+            let emailLog = JSON.parse(localStorage.getItem('emailLog') || '[]');
+            emailLog.push({
+                id: Date.now().toString(),
+                timestamp: new Date().toISOString(),
+                to: emailParams.to_email,
+                subject: emailParams.subject,
+                status: 'sent'
+            });
+            localStorage.setItem('emailLog', JSON.stringify(emailLog));
+        }
+
+        function showStatusMessage(message, type = 'info') {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'status-message';
+            statusDiv.innerHTML = `
+                <div class="status-content ${type}">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            // Add styles
+            statusDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 3000;
+                max-width: 400px;
+            `;
+            
+            const content = statusDiv.querySelector('.status-content');
+            content.style.cssText = `
+                background: ${type === 'success' ? '#4caf50' : '#2196f3'};
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-weight: 500;
+            `;
+            
+            document.body.appendChild(statusDiv);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                if (document.body.contains(statusDiv)) {
+                    document.body.removeChild(statusDiv);
+                }
+            }, 4000);
+        }
+
+        // File Display Functions
+        function generateFileDisplay(files, applicationId) {
+            let html = '<div class="file-links">';
+            let hasFiles = false;
+            
+            const categories = {
+                passport: { name: 'Pasaport/Kimlik', icon: 'fas fa-passport' },
+                cv: { name: 'CV/Özgeçmiş', icon: 'fas fa-file-alt' },
+                certificates: { name: 'Sertifikalar', icon: 'fas fa-certificate' },
+                otherDocuments: { name: 'Diğer Belgeler', icon: 'fas fa-paperclip' }
+            };
+            
+            Object.keys(categories).forEach(category => {
+                const categoryFiles = files[category] || [];
+                if (categoryFiles.length > 0) {
+                    hasFiles = true;
+                    html += `<div class="file-category">${categories[category].name}</div>`;
+                    
+                    categoryFiles.forEach((file, index) => {
+                        html += `
+                            <a href="#" class="file-link" onclick="viewFile('${applicationId}', '${category}', ${index}); return false;">
+                                <i class="${categories[category].icon}"></i>
+                                <span>${truncateFileName(file.name)}</span>
+                                <span class="file-size">(${formatFileSize(file.size)})</span>
+                            </a>
+                        `;
+                    });
+                }
+            });
+            
+            if (!hasFiles) {
+                html += '<div class="no-files">Belge yüklenmemiş</div>';
+            } else {
+                const totalFiles = Object.values(files).reduce((total, arr) => total + arr.length, 0);
+                html += `<div class="file-count">${totalFiles} dosya</div>`;
+            }
+            
+            html += '</div>';
+            return html;
+        }
+
+        function truncateFileName(fileName) {
+            if (fileName.length > 15) {
+                return fileName.substring(0, 12) + '...';
+            }
+            return fileName;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function viewFile(applicationId, category, fileIndex) {
+            const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            const application = applications.find(app => app.id === applicationId);
+            
+            if (!application || !application.files || !application.files[category] || !application.files[category][fileIndex]) {
+                alert('Dosya bulunamadı.');
+                return;
+            }
+            
+            const file = application.files[category][fileIndex];
+            
+            // Create a new window/tab to show the file
+            const newWindow = window.open('', '_blank');
+            
+            if (file.type.startsWith('image/')) {
+                // Display image
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>${file.name}</title>
+                        <style>
+                            body { margin: 0; padding: 20px; background: #f0f0f0; text-align: center; font-family: Arial, sans-serif; }
+                            .container { max-width: 90vw; max-height: 90vh; }
+                            img { max-width: 100%; max-height: 80vh; object-fit: contain; border: 1px solid #ddd; background: white; }
+                            .info { margin: 20px 0; color: #666; }
+                            .download-btn { 
+                                background: #4caf50; color: white; padding: 10px 20px; 
+                                text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <h2>${file.name}</h2>
+                            <div class="info">Dosya Boyutu: ${formatFileSize(file.size)} | Yüklenme: ${new Date(file.uploadDate).toLocaleDateString('tr-TR')}</div>
+                            <img src="${file.data}" alt="${file.name}">
+                            <br>
+                            <a href="${file.data}" download="${file.name}" class="download-btn">
+                                <i class="fas fa-download"></i> İndir
+                            </a>
+                        </div>
+                    </body>
+                    </html>
+                `);
+            } else if (file.type === 'application/pdf') {
+                // Display PDF
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>${file.name}</title>
+                        <style>
+                            body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+                            .header { background: #333; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+                            iframe { width: 100%; height: calc(100vh - 60px); border: none; }
+                            .download-btn { 
+                                background: #4caf50; color: white; padding: 8px 16px; 
+                                text-decoration: none; border-radius: 4px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <div>${file.name} (${formatFileSize(file.size)})</div>
+                            <a href="${file.data}" download="${file.name}" class="download-btn">İndir</a>
+                        </div>
+                        <iframe src="${file.data}"></iframe>
+                    </body>
+                    </html>
+                `);
+            } else {
+                // For other file types, just download
+                const link = document.createElement('a');
+                link.href = file.data;
+                link.download = file.name;
+                link.click();
+                newWindow.close();
+            }
+        }
+
+        // Email Service Integration Instructions (for production)
+        /*
+        To integrate with a real email service like EmailJS:
+
+        1. Sign up for EmailJS (https://www.emailjs.com/)
+        2. Create an email template
+        3. Replace simulateEmailSending function with:
+
+        function sendNotificationEmail(applicationId, status) {
+            // ... existing code ...
+            
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', emailParams)
+                .then(function(response) {
+                    console.log('Email sent successfully:', response);
+                    showStatusMessage('E-posta başarıyla gönderildi!', 'success');
+                }, function(error) {
+                    console.error('Email sending failed:', error);
+                    showStatusMessage('E-posta gönderilirken hata oluştu.', 'error');
+                });
+        }
+
+        4. Add EmailJS script to HTML head:
+        &lt;script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"&gt;&lt;/script&gt;
+        
+        5. Initialize EmailJS:
+        emailjs.init('YOUR_PUBLIC_KEY');
+        */
+    </script>
+</body>
+</html>
