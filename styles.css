@@ -243,7 +243,7 @@ body {
 .hero-description {
     font-size: 1.3rem;
     margin-bottom: 2rem;
-    color: var(--secondary-gray-dark);
+    color: var(--secondary-gray-darker);
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
     line-height: 1.6;
     font-weight: 500;
