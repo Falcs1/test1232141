@@ -209,20 +209,20 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(249, 115, 22, 0.15);
-    color: var(--primary-orange-light);
+    background: rgba(249, 115, 22, 0.1);
+    color: rgba(251, 146, 60, 0.85);
     padding: 0.5rem 1rem;
     border-radius: 25px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 1.5rem;
-    border: 1px solid rgba(249, 115, 22, 0.4);
+    border: 1px solid rgba(249, 115, 22, 0.25);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.2);
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.15);
 }
 
 .hero-badge i {
-    color: var(--primary-orange);
+    color: rgba(251, 146, 60, 0.8);
 }
 
 .hero-text h1 {
@@ -236,22 +236,22 @@ body {
 }
 
 .hero-text h1 .highlight {
-    color: var(--primary-orange-light);
-    text-shadow: 0 4px 12px rgba(249, 115, 22, 0.6);
+    color: rgba(251, 146, 60, 0.9);
+    text-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
 }
 
 .hero-description {
     font-size: 1.3rem;
     margin-bottom: 2rem;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.75);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
     line-height: 1.6;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .hero-description strong {
-    color: var(--primary-orange-light);
-    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
 }
 
 /* Hero Stats */
@@ -282,8 +282,8 @@ body {
 
 .stat-label {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.85);
-    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
