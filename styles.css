@@ -209,20 +209,20 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(249, 115, 22, 0.9);
-    color: var(--neutral-white);
+    background: rgba(249, 115, 22, 0.15);
+    color: var(--primary-orange-light);
     padding: 0.5rem 1rem;
     border-radius: 25px;
     font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
-    border: 2px solid var(--primary-orange);
+    border: 1px solid rgba(249, 115, 22, 0.4);
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.2);
 }
 
 .hero-badge i {
-    color: var(--neutral-white);
+    color: var(--primary-orange);
 }
 
 .hero-text h1 {
@@ -236,22 +236,22 @@ body {
 }
 
 .hero-text h1 .highlight {
-    color: var(--primary-orange);
-    text-shadow: 0 4px 12px rgba(249, 115, 22, 0.8);
+    color: var(--primary-orange-light);
+    text-shadow: 0 4px 12px rgba(249, 115, 22, 0.6);
 }
 
 .hero-description {
     font-size: 1.3rem;
     margin-bottom: 2rem;
-    color: var(--primary-orange-light);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
     line-height: 1.6;
     font-weight: 500;
 }
 
 .hero-description strong {
-    color: var(--primary-orange);
-    font-weight: 700;
+    color: var(--primary-orange-light);
+    font-weight: 600;
 }
 
 /* Hero Stats */
@@ -282,11 +282,11 @@ body {
 
 .stat-label {
     font-size: 0.85rem;
-    color: var(--primary-orange-light);
-    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* Hero Actions */
