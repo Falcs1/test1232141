@@ -19,6 +19,99 @@
             line-height: 1.6;
         }
 
+        /* Login Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            margin-bottom: 2rem;
+        }
+
+        .login-logo img {
+            height: 60px;
+            width: auto;
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .admin-content {
+            display: none;
+        }
+
         .admin-header {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
@@ -204,6 +297,21 @@
             transform: none;
         }
 
+        .btn-archive {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        .btn-archive:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
         .file-links {
             display: flex;
             flex-direction: column;
@@ -346,6 +454,80 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
+        .btn-permanent-delete {
+            background: #8b0000;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        .btn-permanent-delete:hover {
+            background: #660000;
+            transform: translateY(-1px);
+        }
+
+        .btn-restore {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-restore:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        .archived-item {
+            background: #f8f9fa;
+            border-left: 4px solid #6c757d;
+        }
+
+        .archived-badge {
+            background: #6c757d;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .auto-delete-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .days-remaining {
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
         .back-to-site {
             position: fixed;
             top: 2rem;
@@ -420,14 +602,46 @@
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-to-site" title="Ana Sayfaya Dön">
-        <i class="fas fa-home"></i>
-    </a>
-
-    <div class="admin-header">
-        <h1><i class="fas fa-chart-line"></i> Admin Panel</h1>
-        <p>İşteyim Göçteyim - Veri ve Analitik Merkezi</p>
+    <!-- Login Form -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-logo">
+                <img src="images/Varlık 1@4x.png" alt="İşteyim Göçteyim Logo">
+            </div>
+            <h2 class="login-title">Admin Panel</h2>
+            <p class="login-subtitle">Güvenli giriş yapın</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Kullanıcı Adı</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Şifre</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Giriş Yap
+                </button>
+                <div class="error-message" id="errorMessage">
+                    Kullanıcı adı veya şifre hatalı!
+                </div>
+            </form>
+        </div>
     </div>
+
+    <!-- Admin Content -->
+    <div class="admin-content" id="adminContent">
+        <a href="index.html" class="back-to-site" title="Ana Sayfaya Dön">
+            <i class="fas fa-home"></i>
+        </a>
+
+        <div class="admin-header">
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Çıkış
+            </button>
+            <h1><i class="fas fa-chart-line"></i> Admin Panel</h1>
+            <p>İşteyim Göçteyim - Veri ve Analitik Merkezi</p>
+        </div>
 
     <div class="container">
         <!-- Statistics Cards -->
@@ -534,6 +748,42 @@
                     </thead>
                     <tbody id="emailLogBody">
                         <!-- Email logs will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Archived Applications Section -->
+        <div class="data-section">
+            <div class="section-title">
+                <i class="fas fa-archive"></i>
+                Arşivlenmiş Başvurular
+            </div>
+            <div class="auto-delete-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Otomatik Silme:</strong> Arşivlenmiş başvurular 14 gün sonra otomatik olarak silinir. 
+                Kalıcı olarak saklamak istediğiniz başvuruları geri yükleyin.
+            </div>
+            <div class="export-buttons">
+                <button class="btn btn-warning" onclick="clearArchivedData()">
+                    <i class="fas fa-trash"></i> Tüm Arşivi Temizle
+                </button>
+            </div>
+            <div class="table-container">
+                <table class="applications-table" id="archivedTable">
+                    <thead>
+                        <tr>
+                            <th>Arşivlenme Tarihi</th>
+                            <th>Ad Soyad</th>
+                            <th>E-posta</th>
+                            <th>Telefon</th>
+                            <th>Deneyim Alanı</th>
+                            <th>Kalan Gün</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody id="archivedBody">
+                        <!-- Archived applications will be loaded here -->
                     </tbody>
                 </table>
             </div>
@@ -1166,6 +1416,248 @@ Sosyal medya hesaplarımızı takip etmeyi unutmayın:
         5. Initialize EmailJS:
         emailjs.init('YOUR_PUBLIC_KEY');
         */
+
+        // Login System
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'anatoliaexp' && password === 'anatoliapress') {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                document.body.style.background = '#f5f6fa';
+                
+                // Set login session
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                
+                // Load data after successful login
+                loadData();
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+
+        // Check if already logged in
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                document.body.style.background = '#f5f6fa';
+                loadData();
+            }
+        });
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('adminContent').style.display = 'none';
+            document.body.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
+            
+            // Clear form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // Archive application function
+        function archiveApplication(index) {
+            const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            const archivedApplications = JSON.parse(localStorage.getItem('archivedApplications') || '[]');
+            
+            if (applications[index]) {
+                const application = applications[index];
+                application.archivedDate = new Date().toISOString();
+                application.autoDeleteDate = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(); // 14 days from now
+                
+                archivedApplications.push(application);
+                applications.splice(index, 1);
+                
+                localStorage.setItem('applications', JSON.stringify(applications));
+                localStorage.setItem('archivedApplications', JSON.stringify(archivedApplications));
+                
+                loadData();
+                alert('Başvuru arşivlendi. 14 gün sonra otomatik olarak silinecek.');
+            }
+        }
+
+        // Restore application from archive
+        function restoreApplication(index) {
+            const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            const archivedApplications = JSON.parse(localStorage.getItem('archivedApplications') || '[]');
+            
+            if (archivedApplications[index]) {
+                const application = archivedApplications[index];
+                delete application.archivedDate;
+                delete application.autoDeleteDate;
+                
+                applications.push(application);
+                archivedApplications.splice(index, 1);
+                
+                localStorage.setItem('applications', JSON.stringify(applications));
+                localStorage.setItem('archivedApplications', JSON.stringify(archivedApplications));
+                
+                loadData();
+                alert('Başvuru geri yüklendi.');
+            }
+        }
+
+        // Permanently delete application
+        function permanentlyDeleteApplication(index) {
+            if (confirm('Bu başvuru kalıcı olarak silinecek. Bu işlem geri alınamaz. Emin misiniz?')) {
+                const archivedApplications = JSON.parse(localStorage.getItem('archivedApplications') || '[]');
+                archivedApplications.splice(index, 1);
+                localStorage.setItem('archivedApplications', JSON.stringify(archivedApplications));
+                loadData();
+                alert('Başvuru kalıcı olarak silindi.');
+            }
+        }
+
+        // Clear all archived data
+        function clearArchivedData() {
+            if (confirm('Tüm arşivlenmiş başvurular kalıcı olarak silinecek. Bu işlem geri alınamaz. Emin misiniz?')) {
+                localStorage.setItem('archivedApplications', '[]');
+                loadData();
+                alert('Tüm arşivlenmiş başvurular silindi.');
+            }
+        }
+
+        // Auto-delete expired archived applications
+        function autoDeleteExpiredApplications() {
+            const archivedApplications = JSON.parse(localStorage.getItem('archivedApplications') || '[]');
+            const now = new Date();
+            
+            const filteredApplications = archivedApplications.filter(app => {
+                if (app.autoDeleteDate) {
+                    const deleteDate = new Date(app.autoDeleteDate);
+                    return now < deleteDate;
+                }
+                return true;
+            });
+            
+            if (filteredApplications.length !== archivedApplications.length) {
+                localStorage.setItem('archivedApplications', JSON.stringify(filteredApplications));
+                console.log(`${archivedApplications.length - filteredApplications.length} expired applications auto-deleted.`);
+            }
+        }
+
+        // Update archived applications table
+        function updateArchivedTable(archivedApplications) {
+            const tbody = document.getElementById('archivedBody');
+            tbody.innerHTML = '';
+            
+            archivedApplications.forEach((app, index) => {
+                const row = document.createElement('tr');
+                row.className = 'archived-item';
+                
+                const archivedDate = new Date(app.archivedDate);
+                const autoDeleteDate = new Date(app.autoDeleteDate);
+                const now = new Date();
+                const daysRemaining = Math.ceil((autoDeleteDate - now) / (1000 * 60 * 60 * 24));
+                
+                row.innerHTML = `
+                    <td>${archivedDate.toLocaleDateString('tr-TR')}</td>
+                    <td>${app.name}</td>
+                    <td>${app.email}</td>
+                    <td>${app.phone}</td>
+                    <td>${app.experience}</td>
+                    <td><span class="days-remaining">${daysRemaining > 0 ? daysRemaining : 0} gün</span></td>
+                    <td>
+                        <button class="btn-restore" onclick="restoreApplication(${index})" title="Geri Yükle">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button class="btn-permanent-delete" onclick="permanentlyDeleteApplication(${index})" title="Kalıcı Sil">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Modified loadData function to include archived applications
+        const originalLoadData = loadData;
+        loadData = function() {
+            // Auto-delete expired applications first
+            autoDeleteExpiredApplications();
+            
+            // Load regular data
+            originalLoadData();
+            
+            // Load archived applications
+            const archivedApplications = JSON.parse(localStorage.getItem('archivedApplications') || '[]');
+            updateArchivedTable(archivedApplications);
+        };
+
+        // Modified updateApplicationsTable to include archive button
+        const originalUpdateApplicationsTable = updateApplicationsTable;
+        updateApplicationsTable = function(applications) {
+            const tbody = document.getElementById('applicationsBody');
+            tbody.innerHTML = '';
+            
+            applications.forEach((app, index) => {
+                const row = document.createElement('tr');
+                const submissionDate = new Date(app.submissionDate);
+                
+                let statusBadge = '';
+                let actionButtons = '';
+                
+                if (app.status === 'pending') {
+                    statusBadge = '<span class="status-badge status-pending">Beklemede</span>';
+                    actionButtons = `
+                        <button class="btn-accept" onclick="updateApplicationStatus(${index}, 'accepted')" ${app.emailSent ? '' : 'disabled'}>
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn-reject" onclick="updateApplicationStatus(${index}, 'rejected')" ${app.emailSent ? '' : 'disabled'}>
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="btn-archive" onclick="archiveApplication(${index})" title="Arşivle">
+                            <i class="fas fa-archive"></i>
+                        </button>
+                    `;
+                } else if (app.status === 'accepted') {
+                    statusBadge = '<span class="status-badge status-accepted">Kabul Edildi</span>';
+                    actionButtons = `
+                        <button class="btn-archive" onclick="archiveApplication(${index})" title="Arşivle">
+                            <i class="fas fa-archive"></i>
+                        </button>
+                    `;
+                } else if (app.status === 'rejected') {
+                    statusBadge = '<span class="status-badge status-rejected">Reddedildi</span>';
+                    actionButtons = `
+                        <button class="btn-archive" onclick="archiveApplication(${index})" title="Arşivle">
+                            <i class="fas fa-archive"></i>
+                        </button>
+                    `;
+                }
+                
+                const documentsHtml = app.documents && app.documents.length > 0 
+                    ? app.documents.map((doc, docIndex) => 
+                        `<button class="document-btn" onclick="viewDocument(${index}, ${docIndex})">${doc.name}</button>`
+                      ).join(' ')
+                    : 'Belge yok';
+                
+                row.innerHTML = `
+                    <td>${submissionDate.toLocaleDateString('tr-TR')}</td>
+                    <td>${app.name}</td>
+                    <td>${app.email}</td>
+                    <td>${app.phone}</td>
+                    <td>${app.experience}</td>
+                    <td>${documentsHtml}</td>
+                    <td>${statusBadge}</td>
+                    <td class="action-buttons">${actionButtons}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        };
+
+        // Run auto-delete check every hour
+        setInterval(autoDeleteExpiredApplications, 60 * 60 * 1000);
     </script>
+    
+    </div> <!-- End admin-content -->
 </body>
 </html>
