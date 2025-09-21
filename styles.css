@@ -108,7 +108,19 @@ body {
     align-items: center;
     font-weight: 700;
     font-size: 1.2rem;
-    color: var(--primary-orange);
+    color: var(--secondary-gray-darker);
+}
+
+.logo-image {
+    height: 40px;
+    width: auto;
+    margin-right: 8px;
+}
+
+.badge-logo-image {
+    height: 20px;
+    width: auto;
+    margin-right: 6px;
 }
 
 .nav-brand .logo i {
@@ -210,11 +222,11 @@ body {
     align-items: center;
     gap: 0.5rem;
     background: rgba(249, 115, 22, 0.2);
-    color: var(--secondary-gray-darker);
+    color: #0f172a;
     padding: 0.5rem 1rem;
     border-radius: 25px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 1.5rem;
     border: 1px solid rgba(249, 115, 22, 0.4);
     backdrop-filter: blur(10px);
@@ -230,7 +242,7 @@ body {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    color: var(--secondary-gray-darker);
+    color: #0f172a;
     text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
     letter-spacing: -0.02em;
 }
@@ -243,15 +255,15 @@ body {
 .hero-description {
     font-size: 1.3rem;
     margin-bottom: 2rem;
-    color: var(--secondary-gray-darker);
+    color: #0f172a;
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
     line-height: 1.6;
     font-weight: 500;
 }
 
 .hero-description strong {
-    color: var(--secondary-gray-darker);
-    font-weight: 600;
+    color: #0f172a;
+    font-weight: 700;
 }
 
 /* Hero Stats */
@@ -275,15 +287,15 @@ body {
 .stat-number {
     font-size: 2rem;
     font-weight: 800;
-    color: var(--primary-orange-dark);
+    color: #ea580c;
     margin-bottom: 0.25rem;
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .stat-label {
     font-size: 0.85rem;
-    color: var(--secondary-gray-dark);
-    font-weight: 500;
+    color: #0f172a;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
